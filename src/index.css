@@ -1,0 +1,227 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   Fonts. Cyrillic is not optional here - half the site is Bulgarian.
+   Clash Display was the first choice but ships no Cyrillic: browsers silently
+   substitute a serif mid-heading, so Bulgarian and English rendered as two
+   different typefaces. Unbounded carries both scripts with real display
+   character. Verified by rendering, not by trusting the foundry's subset list.
+
+   The <link> lives in index.html: an @import here is swallowed by Tailwind v4's
+   own import handling and no font ever loads.
+--------------------------------------------------------------------------- */
+@theme {
+  /* Ground */
+  --color-void: #05060a;
+  --color-abyss: #0a0c13;
+  --color-slate-1: #12151f;
+  --color-slate-2: #1c212e;
+
+  /* Text */
+  --color-mist: #8a93a8;
+  --color-chalk: #e8ecf4;
+
+  /* Accents */
+  --color-volt: #6ee7f9;
+  --color-volt-dp: #22d3ee;
+  --color-plasma: #a78bfa;
+  /* Gold is reserved for wins only. Its scarcity is what makes it land. */
+  --color-gold: #ffb84d;
+  --color-lime: #a3e635;
+
+  --font-display: 'Unbounded', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  --ease-signature: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    /* Lenis drives scrolling; native smooth scroll would fight it. */
+    scroll-behavior: auto;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-void);
+    color: var(--color-chalk);
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 0.97rem + 0.15vw, 1.125rem);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.06;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  /* Visible, on-brand focus for keyboard users. */
+  :focus-visible {
+    outline: 2px solid var(--color-volt);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--color-volt);
+    color: var(--color-void);
+  }
+
+  /* Scrollbar, dark to match the page rather than punching a white hole. */
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: var(--color-void); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-slate-2);
+    border-radius: 5px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #2a3040; }
+}
+
+@layer utilities {
+  /* Fluid display scale. BG copy runs ~10-15% longer than EN, so every size
+     is checked against the Bulgarian text, not the English. */
+  .text-display {
+    font-size: clamp(2.25rem, 1.2rem + 4.6vw, 6.5rem);
+  }
+  .text-h2 {
+    font-size: clamp(1.75rem, 1.2rem + 2.6vw, 3.5rem);
+  }
+  .text-h3 {
+    font-size: clamp(1.2rem, 1.05rem + 0.8vw, 1.7rem);
+  }
+  .text-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-mist);
+  }
+
+  .section-y {
+    padding-block: clamp(5rem, 12vh, 11rem);
+  }
+
+  .shell {
+    width: min(100% - 2.5rem, 78rem);
+    margin-inline: auto;
+  }
+  @media (min-width: 768px) {
+    .shell { width: min(100% - 5rem, 78rem); }
+  }
+
+  /* Hairline card surface used across sections. */
+  .surface {
+    background: color-mix(in oklab, var(--color-slate-1) 82%, transparent);
+    border: 1px solid var(--color-slate-2);
+    backdrop-filter: blur(12px);
+  }
+
+  .text-gradient {
+    background: linear-gradient(120deg, var(--color-chalk), var(--color-volt) 55%, var(--color-plasma));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Fine grain over flat panels so large dark areas do not band. */
+  .noise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion. The site must still look designed, not stripped - so
+   transitions collapse to near-instant rather than being removed wholesale.
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Native cursor is hidden only once the custom one is actually tracking, so a
+   pointer is never lost if the effect fails to start. */
+@layer base {
+  body.has-custom-cursor,
+  body.has-custom-cursor * {
+    cursor: none;
+  }
+}
+
+@layer utilities {
+  /* Visible to screen readers, not to sighted users. */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Skip link that stays hidden until focused. */
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -100%;
+    z-index: 300;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    background: var(--color-chalk);
+    color: var(--color-void);
+    font-weight: 600;
+    transition: top 0.2s var(--ease-signature);
+  }
+  .skip-link:focus {
+    top: 1rem;
+  }
+}
