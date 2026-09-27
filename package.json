@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
     "assets:certs": "tsx scripts/prepare-certificates.mts",
-    "assets:repos": "tsx scripts/fetch-repos.mts"
+    "assets:repos": "tsx scripts/fetch-repos.mts",
+    "assets:cv": "tsx scripts/prepare-cv.mts"
   },
   "engines": {
     "node": ">=20.19"

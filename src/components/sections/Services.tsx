@@ -4,14 +4,16 @@ import { Magnetic } from '../ui/Magnetic';
 import { useT } from '../../i18n';
 import { useScrollTo } from '../../hooks/useLenis';
 import { SERVICE_KEYS } from '../../data/site';
+import { Aurora } from '../ui/Aurora';
 
 export function Services() {
   const t = useT();
   const scrollTo = useScrollTo();
 
   return (
-    <section id="services" className="section-y relative">
-      <div className="shell">
+    <section id="services" className="section-y relative overflow-hidden">
+      <Aurora />
+      <div className="shell relative">
         <div className="flex flex-wrap items-end justify-between gap-8">
           <div className="max-w-2xl">
             <Reveal>
@@ -39,7 +41,7 @@ export function Services() {
           {SERVICE_KEYS.map((key, i) => (
             <Reveal key={key} delay={i * 0.08}>
               <TiltCard className="group h-full">
-                <div className="surface noise relative h-full overflow-hidden rounded-2xl p-8 transition-colors duration-500 group-hover:border-volt/40">
+                <div className="surface noise edge-glow sheen relative h-full overflow-hidden rounded-2xl p-8 transition-colors duration-500 group-hover:border-volt/40">
                   <span className="font-mono text-xs text-mist">
                     {String(i + 1).padStart(2, '0')}
                   </span>

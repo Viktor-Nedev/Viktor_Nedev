@@ -13,7 +13,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <Reveal delay={(index % 3) * 0.07} className={wide ? 'sm:col-span-2' : ''}>
       <TiltCard className="group h-full" intensity={5}>
-        <article className="surface noise relative flex h-full flex-col overflow-hidden rounded-2xl p-7 transition-colors duration-500 group-hover:border-volt/40 sm:p-8">
+        <article className="surface noise edge-glow sheen relative flex h-full flex-col overflow-hidden rounded-2xl p-7 transition-colors duration-500 group-hover:border-volt/40 sm:p-8">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <h3 className="font-display text-2xl sm:text-3xl">{project.name}</h3>
             {project.award && (

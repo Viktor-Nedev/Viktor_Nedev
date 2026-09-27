@@ -25,7 +25,7 @@ export function Games() {
           {games.map((game, i) => (
             <Reveal key={game.slug} delay={i * 0.08}>
               <TiltCard className="group" intensity={4}>
-                <article className="surface noise relative overflow-hidden rounded-2xl transition-colors duration-500 group-hover:border-volt/40">
+                <article className="surface noise edge-glow sheen relative overflow-hidden rounded-2xl transition-colors duration-500 group-hover:border-volt/40">
                   <div className="grid gap-8 p-7 sm:p-9 lg:grid-cols-12 lg:items-center">
                     {game.image ? (
                       <div className="lg:col-span-3">

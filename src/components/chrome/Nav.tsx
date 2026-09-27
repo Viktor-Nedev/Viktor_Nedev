@@ -7,7 +7,7 @@ import { useScrollTo } from '../../hooks/useLenis';
 import { LangToggle } from './LangToggle';
 import { Magnetic } from '../ui/Magnetic';
 
-const SECTIONS = ['about', 'skills', 'services', 'work', 'games', 'certificates'] as const;
+const SECTIONS = ['about', 'skills', 'services', 'work', 'games', 'certificates', 'cv'] as const;
 
 export function Nav() {
   const t = useT();
@@ -40,6 +40,7 @@ export function Nav() {
     work: t.nav.work,
     games: t.nav.games,
     certificates: t.nav.certificates,
+    cv: t.nav.cv,
   };
 
   const jump = (id: string) => {

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Reveal, RevealText } from '../ui/Reveal';
+import { Aurora } from '../ui/Aurora';
 import { useI18n, useT } from '../../i18n';
 import { cn } from '../../lib/cn';
 import { EASE } from '../../lib/easing';
@@ -105,8 +106,9 @@ export function Booking() {
   const stepLabels = [t.booking.steps.date, t.booking.steps.time, t.booking.steps.details];
 
   return (
-    <section id="booking" className="section-y relative">
-      <div className="shell">
+    <section id="booking" className="section-y relative overflow-hidden">
+      <Aurora />
+      <div className="shell relative">
         <div className="max-w-2xl">
           <Reveal>
             <p className="text-eyebrow mb-5">{t.booking.title}</p>
@@ -118,7 +120,7 @@ export function Booking() {
         </div>
 
         <Reveal delay={0.2}>
-          <div className="surface noise relative mt-12 overflow-hidden rounded-2xl p-6 sm:p-9">
+          <div className="surface noise edge-glow relative mt-12 overflow-hidden rounded-2xl p-6 sm:p-9">
             {step < 3 && (
               <>
                 {/* Progress rail */}

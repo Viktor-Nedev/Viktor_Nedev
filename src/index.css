@@ -225,3 +225,89 @@
     top: 1rem;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Ambient motion. Long, mismatched cycles so the loop never lands on an
+   obvious beat, and all of it on transform/opacity so it stays on the
+   compositor.
+--------------------------------------------------------------------------- */
+@keyframes aurora-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33%      { transform: translate3d(8vw, 6vh, 0) scale(1.14); }
+  66%      { transform: translate3d(-4vw, 10vh, 0) scale(0.92); }
+}
+@keyframes aurora-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  40%      { transform: translate3d(-9vw, -7vh, 0) scale(0.9); }
+  75%      { transform: translate3d(5vw, -3vh, 0) scale(1.18); }
+}
+
+@keyframes sheen {
+  0%   { transform: translateX(-120%) skewX(-18deg); }
+  100% { transform: translateX(320%) skewX(-18deg); }
+}
+
+@layer utilities {
+  /* A hairline gradient border that brightens on hover. The gradient lives on
+     a pseudo-element mask so the card keeps a transparent interior. */
+  .edge-glow {
+    position: relative;
+  }
+  .edge-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--color-volt) 55%, transparent),
+      transparent 38%,
+      transparent 62%,
+      color-mix(in oklab, var(--color-plasma) 45%, transparent)
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.55s var(--ease-signature);
+    pointer-events: none;
+  }
+  .group:hover .edge-glow::before,
+  .edge-glow:hover::before {
+    opacity: 1;
+  }
+
+  /* A light sweep that crosses a surface once on hover. */
+  .sheen {
+    position: relative;
+    overflow: hidden;
+  }
+  .sheen::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 38%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--color-chalk) 7%, transparent),
+      transparent
+    );
+    opacity: 0;
+    pointer-events: none;
+  }
+  .group:hover .sheen::after,
+  .sheen:hover::after {
+    opacity: 1;
+    animation: sheen 1.1s var(--ease-signature);
+  }
+
+  /* Numerals line up in columns when they are tabular. */
+  .nums {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+}

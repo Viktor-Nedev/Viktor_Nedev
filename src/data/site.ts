@@ -8,6 +8,14 @@ export const site = {
     devpost: 'https://devpost.com/viktornedev08',
     itch: 'https://viktor-nedev.itch.io/',
   },
+  cv: {
+    file: 'cv/Viktor-Nedev-CV.pdf',
+    preview: 'cv/cv-preview.webp',
+    /** Kept for the download attribute so the saved file has a real name. */
+    downloadName: 'Viktor-Nedev-CV.pdf',
+    lqip:
+      'data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAACwBACdASoUABwAPuleo02pJSMiMAwBIB0JZwDMWCHhgNe45E8AETsKCtywulAAAOJ+Tj1HfkG74lK4dWwNOsd45C6WhwFQxBsrEz1rhqVJx/aOPZgCbdJKAAA=',
+  },
   /** Headline counters. Sourced from Devpost and the GitHub API. */
   stats: {
     wins: 12,
@@ -15,6 +23,8 @@ export const site = {
     repos: 34,
     certificates: 13,
     games: 3,
+    /** Years writing code, per the CV. */
+    years: 6,
   },
   booking: {
     /** After school hours, Eastern European Time. */

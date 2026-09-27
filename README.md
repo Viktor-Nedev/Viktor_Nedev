@@ -78,3 +78,17 @@ updates.
 
 The same build also runs on Vercel with no configuration, since `base` defaults
 to `/`.
+
+## Updating the CV
+
+Replace `assets-src/Viktor_Nedev_CV.pdf`, then regenerate the public copy and
+its preview image:
+
+```bash
+npm run assets:cv
+```
+
+That writes `public/cv/Viktor-Nedev-CV.pdf` (what visitors download) and
+`public/cv/cv-preview.webp` (the page-one thumbnail shown on the site). If the
+preview's blur placeholder changes, the script prints the new `lqip` string for
+`src/data/site.ts`.

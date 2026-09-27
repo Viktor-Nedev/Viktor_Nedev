@@ -6,6 +6,9 @@ import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { Magnetic } from '../ui/Magnetic';
 import { Counter } from '../ui/Counter';
 import { site } from '../../data/site';
+import { Marquee } from '../ui/Marquee';
+import { skills } from '../../data/skills';
+import { asset } from '../../lib/asset';
 
 export function Hero() {
   const t = useT();
@@ -77,17 +80,35 @@ export function Hero() {
             {t.hero.ctaSecondary}
             <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
           </button>
+          <a
+            href={asset(site.cv.file)}
+            download={site.cv.downloadName}
+            className="group flex items-center gap-2 text-sm text-mist transition-colors hover:text-chalk"
+          >
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden>
+              <path
+                d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7M2 13.5h12"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="transition-transform duration-300 group-hover:translate-y-0.5"
+              />
+            </svg>
+            {t.cv.download}
+          </a>
         </motion.div>
 
         {/* Headline numbers. 12 of 69 is the story worth leading with. */}
         <motion.dl
-          className="mt-16 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4"
+          className="mt-16 grid max-w-3xl grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-3 lg:grid-cols-5"
           {...rise(0.8)}
         >
           {(
             [
               ['wins', site.stats.wins, true],
               ['hackathons', site.stats.hackathons, false],
+              ['years', site.stats.years, false],
               ['repos', site.stats.repos, false],
               ['games', site.stats.games, false],
             ] as const
@@ -96,7 +117,7 @@ export function Hero() {
               <dt className="sr-only">{t.stats[key]}</dt>
               <dd>
                 <span
-                  className="block font-display text-4xl sm:text-5xl"
+                  className="nums block font-display text-4xl sm:text-5xl"
                   style={gold ? { color: 'var(--color-gold)' } : undefined}
                 >
                   <Counter value={value} />
@@ -111,7 +132,7 @@ export function Hero() {
       {/* Scroll hint */}
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-8 z-10 flex justify-center"
+        className="pointer-events-none absolute inset-x-0 bottom-20 z-10 flex justify-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4, duration: 0.8 }}
@@ -129,6 +150,11 @@ export function Hero() {
           </span>
         </div>
       </motion.div>
+
+      {/* A drifting band of the stack, reacting to scroll velocity. */}
+      <div className="absolute inset-x-0 bottom-0 z-10 border-t border-slate-2/60 bg-void/40 py-3 backdrop-blur-sm">
+        <Marquee items={skills.filter((sk) => sk.core).map((sk) => sk.name)} speed={22} />
+      </div>
     </section>
   );
 }

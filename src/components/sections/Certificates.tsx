@@ -173,7 +173,7 @@ export function Certificates() {
                     {String(i + 1).padStart(2, '0')} · {cert.dateLabel.en.split(' ').pop()}
                   </span>
                   <span className="font-display text-sm leading-tight">{cert.title.en}</span>
-                  <span className="mt-auto pt-2 font-mono text-[0.65rem] text-lime">6.00</span>
+                  <span className="nums mt-auto pt-2 font-mono text-[0.65rem] text-lime">6.00</span>
                 </div>
               </button>
             </Reveal>

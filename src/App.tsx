@@ -12,6 +12,7 @@ import { Work } from './components/sections/Work';
 import { AllProjects } from './components/sections/AllProjects';
 import { Games } from './components/sections/Games';
 import { Certificates } from './components/sections/Certificates';
+import { Resume } from './components/sections/Resume';
 import { Booking } from './components/sections/Booking';
 import { Contact } from './components/sections/Contact';
 import { useT } from './i18n';
@@ -50,6 +51,7 @@ export function App() {
         <AllProjects />
         <Games />
         <Certificates />
+        <Resume />
         <Booking />
       </main>
 
