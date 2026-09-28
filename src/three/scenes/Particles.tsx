@@ -54,7 +54,7 @@ export function Particles({ count = 2000 }: { count?: number }) {
         uniforms={uniforms}
         transparent
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
+        blending={THREE.NormalBlending}
         vertexShader={/* glsl */ `
           attribute float aSeed;
           uniform float uTime;
@@ -94,7 +94,8 @@ export function Particles({ count = 2000 }: { count?: number }) {
             float d = length(uv);
             if (d > 0.5) discard;
             float mask = smoothstep(0.5, 0.05, d);
-            gl_FragColor = vec4(mix(vec3(0.43, 0.90, 0.98), vec3(0.65, 0.55, 0.98), vAlpha), mask * vAlpha);
+            // White motes with a faint cold cast, so they read on pale ice.
+            gl_FragColor = vec4(mix(vec3(1.0), vec3(0.72, 0.87, 0.97), 0.5), mask * vAlpha);
           }
         `}
       />

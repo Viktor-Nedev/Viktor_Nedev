@@ -63,7 +63,7 @@ export function Resume() {
                 <a
                   href={asset(site.cv.file)}
                   download={site.cv.downloadName}
-                  className="group/dl inline-flex items-center gap-2.5 rounded-full bg-chalk px-6 py-3 font-medium text-void transition-colors hover:bg-volt"
+                  className="group/dl inline-flex items-center gap-2.5 rounded-full bg-chalk px-6 py-3 font-medium text-white shadow-[0_10px_30px_-12px_rgba(13,47,82,0.5)] transition-colors hover:bg-volt-dp"
                 >
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
                     <path

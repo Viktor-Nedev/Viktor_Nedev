@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { SmoothScrollProvider } from './hooks/useLenis';
 import { Loader } from './components/chrome/Loader';
 import { Cursor } from './components/chrome/Cursor';
+import { Snow } from './components/ui/Snow';
 import { Nav } from './components/chrome/Nav';
 import { ScrollProgress } from './components/chrome/ScrollProgress';
 import { Hero } from './components/sections/Hero';
@@ -30,6 +31,7 @@ export function App() {
     <SmoothScrollProvider>
       <Loader />
       <Cursor />
+      <Snow />
 
       <Suspense fallback={null}>
         <Canvas3D />

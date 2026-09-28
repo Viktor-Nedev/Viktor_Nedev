@@ -7,6 +7,8 @@ import { Magnetic } from '../ui/Magnetic';
 import { Counter } from '../ui/Counter';
 import { site } from '../../data/site';
 import { Marquee } from '../ui/Marquee';
+import { FrostedPane } from '../ui/FrostedPane';
+import { Icicles } from '../ui/Icicles';
 import { skills } from '../../data/skills';
 import { asset } from '../../lib/asset';
 
@@ -34,24 +36,29 @@ export function Hero() {
       id="top"
       className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden"
     >
+      {/* Hung below the nav bar rather than from y=0, so they do not grow
+          through the links. */}
+      <Icicles count={26} maxLength={72} seed={9} className="top-[72px] z-[2]" />
       <div className="shell relative z-10 pt-28 pb-20">
         <motion.p className="text-eyebrow mb-6" {...rise(0.1)}>
           {t.hero.eyebrow}
         </motion.p>
 
-        <h1 className="text-display leading-[0.88]">
-          <span className="sr-only">{name}</span>
-          <span aria-hidden className="block overflow-hidden">
-            <motion.span className="block" {...rise(0.2)}>
-              {first}
-            </motion.span>
-          </span>
-          <span aria-hidden className="block overflow-hidden">
-            <motion.span className="block text-gradient" {...rise(0.3)}>
-              {rest.join(' ')}
-            </motion.span>
-          </span>
-        </h1>
+        <FrostedPane delay={900}>
+          <h1 className="text-display leading-[0.88]">
+            <span className="sr-only">{name}</span>
+            <span aria-hidden className="block overflow-hidden">
+              <motion.span className="block" {...rise(0.2)}>
+                {first}
+              </motion.span>
+            </span>
+            <span aria-hidden className="block overflow-hidden">
+              <motion.span className="block text-gradient" {...rise(0.3)}>
+                {rest.join(' ')}
+              </motion.span>
+            </span>
+          </h1>
+        </FrostedPane>
 
         <motion.p
           className="mt-8 max-w-2xl font-display text-h3 text-chalk/90"
@@ -68,7 +75,7 @@ export function Hero() {
           <Magnetic>
             <button
               onClick={() => scrollTo('#booking', -70)}
-              className="rounded-full bg-chalk px-7 py-3.5 font-medium text-void transition-colors hover:bg-volt"
+              className="rounded-full bg-chalk px-7 py-3.5 font-medium text-white shadow-[0_10px_30px_-12px_rgba(13,47,82,0.5)] transition-colors hover:bg-volt-dp"
             >
               {t.hero.cta}
             </button>

@@ -11,27 +11,37 @@
    own import handling and no font ever loads.
 --------------------------------------------------------------------------- */
 @theme {
-  /* Ground */
-  --color-void: #05060a;
-  --color-abyss: #0a0c13;
-  --color-slate-1: #12151f;
-  --color-slate-2: #1c212e;
+  /* Frost. The token NAMES are unchanged from the dark theme on purpose -
+     every component already references them, so the whole site re-themes
+     from here rather than from a hundred edits. */
 
-  /* Text */
-  --color-mist: #8a93a8;
-  --color-chalk: #e8ecf4;
+  /* Ground: frozen glass, coldest at the back. */
+  --color-void: #eef4fa;      /* page base - pale ice, never pure white */
+  --color-abyss: #e3ecf6;     /* alternating band */
+  --color-slate-1: #ffffff;   /* card face, floated above the page */
+  --color-slate-2: #c8d8e8;   /* hairline / frozen edge */
 
-  /* Accents */
-  --color-volt: #6ee7f9;
-  --color-volt-dp: #22d3ee;
-  --color-plasma: #a78bfa;
-  /* Gold is reserved for wins only. Its scarcity is what makes it land. */
-  --color-gold: #ffb84d;
-  --color-lime: #a3e635;
+  /* Text: deep glacial blue rather than black, so nothing reads as harsh. */
+  --color-mist: #4a6480;      /* secondary - darkened to clear 4.5:1 on ice */
+  --color-chalk: #0d2438;     /* headings and body */
 
-  --font-display: 'Unbounded', 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+  /* Accents: meltwater and deep ice. */
+  /* Primary. On a pale ground a bright cyan fails contrast badly, so this
+     is a deep glacial teal: it still reads as ice, but passes 4.5:1. */
+  --color-volt: #0b7590;
+  --color-volt-dp: #095d73;   /* hover / pressed */
+  --color-plasma: #6d7fe0;    /* secondary, for gradients */
+  /* Reserved for wins only. Deepened from the dark theme's #FFB84D, which
+     was invisible on a pale ground. */
+  --color-gold: #9a5b00;
+  --color-lime: #237a3f;      /* success */
+
+  /* Glass. Frosted panels read as ice only when what is behind them shows
+     through, so the surface tokens are translucent by design. */
+  --glass-face: rgba(255, 255, 255, 0.58);
+  --glass-edge: rgba(255, 255, 255, 0.75);
+  --glass-blur: 18px;
+  --frost-shadow: 0 14px 40px -18px rgba(13, 47, 82, 0.34);
 
   --ease-signature: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -52,6 +62,12 @@
   body {
     margin: 0;
     background-color: var(--color-void);
+    /* Two cold pools of light so the page reads as frozen glass rather than
+       flat paper. Fixed, so it does not slide against the content. */
+    background-image:
+      radial-gradient(60% 45% at 78% 8%, rgba(110, 190, 230, 0.26), transparent 70%),
+      radial-gradient(52% 40% at 12% 82%, rgba(122, 140, 226, 0.2), transparent 72%);
+    background-attachment: fixed;
     color: var(--color-chalk);
     font-family: var(--font-sans);
     font-size: clamp(1rem, 0.97rem + 0.15vw, 1.125rem);
@@ -100,17 +116,17 @@
 
   ::selection {
     background: var(--color-volt);
-    color: var(--color-void);
+    color: #ffffff;
   }
 
-  /* Scrollbar, dark to match the page rather than punching a white hole. */
+  /* Scrollbar tinted to the ice so it does not punch a grey bar down the side. */
   ::-webkit-scrollbar { width: 10px; }
-  ::-webkit-scrollbar-track { background: var(--color-void); }
+  ::-webkit-scrollbar-track { background: var(--color-abyss); }
   ::-webkit-scrollbar-thumb {
-    background: var(--color-slate-2);
+    background: #a9c2da;
     border-radius: 5px;
   }
-  ::-webkit-scrollbar-thumb:hover { background: #2a3040; }
+  ::-webkit-scrollbar-thumb:hover { background: #8fb0cd; }
 }
 
 @layer utilities {
@@ -145,28 +161,74 @@
     .shell { width: min(100% - 5rem, 78rem); }
   }
 
-  /* Hairline card surface used across sections. */
+  /* Frosted glass panel.
+     Glass only reads as glass when the page shows through it, so the face is
+     translucent and the blur does the work. The inset highlight along the top
+     edge is what sells it as a physical pane catching light. */
   .surface {
-    background: color-mix(in oklab, var(--color-slate-1) 82%, transparent);
-    border: 1px solid var(--color-slate-2);
-    backdrop-filter: blur(12px);
+    background: linear-gradient(
+      160deg,
+      var(--glass-edge),
+      var(--glass-face) 42%,
+      rgba(226, 240, 250, 0.52)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    outline: 1px solid var(--color-slate-2);
+    outline-offset: -1px;
+    backdrop-filter: blur(var(--glass-blur)) saturate(1.35);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.35);
+    box-shadow:
+      var(--frost-shadow),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  }
+
+  /* Heavier pane, for the panels that should feel closest to the viewer. */
+  .surface-deep {
+    background: linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.86),
+      rgba(255, 255, 255, 0.68) 55%,
+      rgba(222, 238, 250, 0.62)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(26px) saturate(1.4);
+    -webkit-backdrop-filter: blur(26px) saturate(1.4);
+    box-shadow:
+      0 20px 56px -22px rgba(13, 47, 82, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 1);
   }
 
   .text-gradient {
-    background: linear-gradient(120deg, var(--color-chalk), var(--color-volt) 55%, var(--color-plasma));
+    background: linear-gradient(120deg, var(--color-chalk), var(--color-volt) 52%, var(--color-plasma));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
-  /* Fine grain over flat panels so large dark areas do not band. */
+  /* Frost grain. On a pale ground the dark-theme noise read as dirt, so this
+     is a cold crystalline speckle at very low opacity instead. */
   .noise::after {
     content: '';
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.035;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.75 0 0 0 0 0.88 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23f)'/%3E%3C/svg%3E");
+  }
+
+  /* Condensation: the smeared, uneven bloom on a breathed-on pane. Sits
+     under content, never over it. */
+  .condensation::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+      radial-gradient(38% 28% at 22% 18%, rgba(255, 255, 255, 0.72), transparent 70%),
+      radial-gradient(30% 34% at 82% 72%, rgba(214, 236, 250, 0.6), transparent 72%);
+    filter: blur(6px);
   }
 }
 
@@ -236,6 +298,26 @@
   33%      { transform: translate3d(8vw, 6vh, 0) scale(1.14); }
   66%      { transform: translate3d(-4vw, 10vh, 0) scale(0.92); }
 }
+
+/* Icicles hang from a fixed shoulder, so they pivot rather than slide. */
+@keyframes icicle-sway {
+  0%, 100% { transform: rotate(-0.7deg); }
+  50%      { transform: rotate(0.7deg); }
+}
+
+/* One drifting flake. Distance and duration are set per flake inline. */
+@keyframes snow-fall {
+  0%   { transform: translate3d(0, -10vh, 0); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translate3d(var(--drift, 2vw), 110vh, 0); opacity: 0; }
+}
+
+/* Frost creeping in from the edge of a pane on hover. */
+@keyframes frost-creep {
+  from { opacity: 0; transform: scale(1.04); }
+  to   { opacity: 1; transform: scale(1); }
+}
 @keyframes aurora-b {
   0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
   40%      { transform: translate3d(-9vw, -7vh, 0) scale(0.9); }
@@ -261,10 +343,10 @@
     padding: 1px;
     background: linear-gradient(
       135deg,
-      color-mix(in oklab, var(--color-volt) 55%, transparent),
-      transparent 38%,
-      transparent 62%,
-      color-mix(in oklab, var(--color-plasma) 45%, transparent)
+      rgba(255, 255, 255, 0.95),
+      color-mix(in oklab, var(--color-volt) 42%, transparent) 30%,
+      transparent 52%,
+      rgba(255, 255, 255, 0.9)
     );
     -webkit-mask:
       linear-gradient(#000 0 0) content-box,
@@ -293,7 +375,7 @@
     background: linear-gradient(
       90deg,
       transparent,
-      color-mix(in oklab, var(--color-chalk) 7%, transparent),
+      rgba(255, 255, 255, 0.75),
       transparent
     );
     opacity: 0;

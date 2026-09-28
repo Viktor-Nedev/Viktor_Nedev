@@ -66,7 +66,7 @@ export function AllProjects() {
                   {demoOnly === value && (
                     <motion.span
                       layoutId="repo-filter-pill"
-                      className="absolute inset-0 -z-10 rounded-full bg-chalk"
+                      className="absolute inset-0 -z-10 rounded-full bg-chalk shadow-[0_4px_14px_-6px_rgba(13,47,82,0.55)]"
                       transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                     />
                   )}
@@ -77,7 +77,7 @@ export function AllProjects() {
           </Reveal>
         </div>
 
-        <motion.ul layout className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-slate-2 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.ul layout className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-white/80 shadow-[0_18px_50px_-26px_rgba(13,47,82,0.4)] sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {shown.map((repo) => (
               <motion.li
@@ -87,13 +87,13 @@ export function AllProjects() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.97 }}
                 transition={{ duration: 0.35, ease: EASE }}
-                className="bg-void outline outline-slate-2"
+                className="bg-white/35 outline outline-slate-2"
               >
                 <a
                   href={repo.homepage ?? repo.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex h-full flex-col gap-3 bg-slate-1/40 p-5 transition-colors hover:bg-slate-1"
+                  className="group flex h-full flex-col gap-3 bg-white/55 p-5 backdrop-blur-sm transition-colors hover:bg-white"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="font-display text-lg transition-colors group-hover:text-volt">

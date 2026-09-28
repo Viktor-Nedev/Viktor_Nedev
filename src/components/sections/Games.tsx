@@ -29,7 +29,7 @@ export function Games() {
                   <div className="grid gap-8 p-7 sm:p-9 lg:grid-cols-12 lg:items-center">
                     {game.image ? (
                       <div className="lg:col-span-3">
-                        <div className="flex items-center justify-center rounded-xl bg-void/60 p-6">
+                        <div className="flex items-center justify-center rounded-xl bg-white/70 p-6">
                           <img
                             src={asset(game.image)}
                             alt={game.name}
@@ -42,7 +42,7 @@ export function Games() {
                       </div>
                     ) : (
                       <div className="hidden lg:col-span-3 lg:block">
-                        <div className="flex aspect-square items-center justify-center rounded-xl border border-slate-2 bg-void/60">
+                        <div className="flex aspect-square items-center justify-center rounded-xl border border-white/70 bg-white/60">
                           <span className="font-display text-5xl text-slate-2">
                             {String(i + 1).padStart(2, '0')}
                           </span>

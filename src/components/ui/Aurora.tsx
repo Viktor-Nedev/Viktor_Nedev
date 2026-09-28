@@ -2,11 +2,12 @@ import { useEffect, useRef } from 'react';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 /**
- * Slow drifting colour wash behind a section.
+ * Slow drifting cold light behind a section.
  *
- * Two blurred radial blobs on long, mismatched cycles, so the loop never
+ * Two blurred radial pools on long, mismatched cycles, so the loop never
  * lands on an obvious beat. Pure CSS animation, so it runs on the compositor
- * and costs nothing on the main thread.
+ * and costs nothing on the main thread. Tuned for the pale ground: on ice
+ * these read as light pooling under glass, not as coloured smoke.
  */
 export function Aurora({ className = '' }: { className?: string }) {
   const reduced = useReducedMotion();
@@ -14,16 +15,16 @@ export function Aurora({ className = '' }: { className?: string }) {
   return (
     <div aria-hidden className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}>
       <span
-        className="absolute -left-[15%] top-[-20%] h-[55vw] w-[55vw] rounded-full opacity-[0.16] blur-[110px]"
+        className="absolute -left-[15%] top-[-20%] h-[55vw] w-[55vw] rounded-full opacity-[0.3] blur-[110px]"
         style={{
-          background: 'radial-gradient(circle, var(--color-volt), transparent 68%)',
+          background: 'radial-gradient(circle, #8ed6f0, transparent 68%)',
           animation: reduced ? undefined : 'aurora-a 26s ease-in-out infinite',
         }}
       />
       <span
-        className="absolute -right-[10%] bottom-[-25%] h-[48vw] w-[48vw] rounded-full opacity-[0.13] blur-[120px]"
+        className="absolute -right-[10%] bottom-[-25%] h-[48vw] w-[48vw] rounded-full opacity-[0.26] blur-[120px]"
         style={{
-          background: 'radial-gradient(circle, var(--color-plasma), transparent 70%)',
+          background: 'radial-gradient(circle, #a8b6f2, transparent 70%)',
           animation: reduced ? undefined : 'aurora-b 34s ease-in-out infinite',
         }}
       />
@@ -60,7 +61,7 @@ export function Divider() {
     <div
       ref={ref}
       aria-hidden
-      className="h-px origin-left bg-gradient-to-r from-transparent via-slate-2 to-transparent transition-transform duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+      className="h-px origin-left bg-gradient-to-r from-transparent via-white to-transparent transition-transform duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
       style={{ transform: reduced ? 'scaleX(1)' : 'scaleX(0)' }}
     />
   );

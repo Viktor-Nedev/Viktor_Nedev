@@ -24,7 +24,7 @@ export function LangToggle() {
 
   return (
     <div
-      className="relative flex items-center rounded-full border border-slate-2 p-0.5"
+      className="relative flex items-center rounded-full border border-white/80 bg-white/50 p-0.5 backdrop-blur"
       role="group"
       aria-label={t.a11y.langToggle}
     >
@@ -36,12 +36,12 @@ export function LangToggle() {
             onClick={() => setLang(option)}
             aria-pressed={selected}
             className="relative z-10 px-2.5 py-1 font-mono text-xs uppercase transition-colors duration-300"
-            style={{ color: selected ? 'var(--color-void)' : 'var(--color-mist)' }}
+            style={{ color: selected ? '#ffffff' : 'var(--color-mist)' }}
           >
             {selected && (
               <motion.span
                 layoutId="lang-pill"
-                className="absolute inset-0 -z-10 rounded-full bg-chalk"
+                className="absolute inset-0 -z-10 rounded-full bg-chalk shadow-[0_4px_14px_-6px_rgba(13,47,82,0.55)]"
                 transition={{ type: 'spring', stiffness: 400, damping: 32 }}
               />
             )}

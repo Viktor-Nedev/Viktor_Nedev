@@ -94,7 +94,7 @@ export function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
           aria-label={`${t.a11y.certificateOf} ${item.title[lang]}`}
         >
           <motion.button
-            className="absolute inset-0 bg-void/92 backdrop-blur-md"
+            className="absolute inset-0 bg-[#e8f1f8]/88 backdrop-blur-xl"
             onClick={onClose}
             aria-label={t.certificates.close}
             initial={{ opacity: 0 }}
@@ -119,7 +119,7 @@ export function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
               className="max-h-[70vh] w-auto self-center rounded-lg object-contain shadow-2xl"
             />
 
-            <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-2 bg-slate-1/85 px-4 py-3 backdrop-blur">
+            <div className="surface flex flex-wrap items-center justify-between gap-3 rounded-lg px-4 py-3">
               <div className="min-w-0">
                 <p className="truncate font-display text-lg">{item.title[lang]}</p>
                 <p className="truncate text-sm text-mist">
@@ -170,7 +170,7 @@ export function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
                 <button
                   onClick={onClose}
                   aria-label={t.certificates.close}
-                  className="rounded-md bg-chalk px-3 py-1.5 text-sm font-medium text-void transition-opacity hover:opacity-85"
+                  className="rounded-md bg-chalk px-3 py-1.5 text-sm font-medium text-white transition-opacity hover:opacity-85"
                 >
                   ✕
                 </button>

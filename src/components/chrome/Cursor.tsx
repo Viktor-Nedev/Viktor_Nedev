@@ -75,15 +75,16 @@ export function Cursor() {
     <div aria-hidden className="pointer-events-none fixed inset-0 z-[200] hidden md:block">
       <div
         ref={dot}
-        className="absolute left-0 top-0 h-1.5 w-1.5 rounded-full bg-chalk mix-blend-difference"
+        className="absolute left-0 top-0 h-1.5 w-1.5 rounded-full bg-[#0d2438]"
       />
       <div
         ref={ring}
-        className="absolute left-0 top-0 rounded-full border border-chalk/70 mix-blend-difference transition-[width,height,opacity] duration-300"
+        className="absolute left-0 top-0 rounded-full border border-[#0d2438]/45 transition-[width,height,opacity] duration-300"
         style={{
           width: active ? 46 : 28,
           height: active ? 46 : 28,
-          opacity: active ? 0.9 : 0.45,
+          opacity: active ? 1 : 0.6,
+          backdropFilter: 'blur(1px)',
         }}
       />
     </div>

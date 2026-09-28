@@ -32,7 +32,7 @@ function CertCard({
           : 'border-slate-2 hover:border-volt/45',
       )}
     >
-      <div className="relative overflow-hidden bg-void">
+      <div className="relative overflow-hidden bg-white">
         <img
           src={asset(cert.image)}
           alt={`${t.a11y.certificateOf} ${cert.title[lang]}`}
@@ -47,12 +47,12 @@ function CertCard({
           }}
           className="w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
         />
-        <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-void/85 via-transparent to-transparent" />
+        <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/70 via-transparent to-transparent" />
       </div>
 
       {/* A solid footer rather than an overlay: certificates are dense light
           documents and captions laid over them are unreadable. */}
-      <div className="border-t border-slate-2 bg-slate-1/90 p-5 backdrop-blur">
+      <div className="border-t border-white/70 bg-white/70 p-5 backdrop-blur">
         <div className="flex flex-wrap items-center gap-2">
           <span
             className={cn(
@@ -168,7 +168,7 @@ export function Certificates() {
                   style={{ backgroundImage: `url(${cert.lqip})`, backgroundSize: 'cover' }}
                   className="aspect-[3/4] w-full object-cover object-top opacity-85 transition-all duration-700 group-hover:scale-[1.03] group-hover:opacity-100"
                 />
-                <div className="flex flex-1 flex-col gap-1 border-t border-slate-2 p-4">
+                <div className="flex flex-1 flex-col gap-1 border-t border-white/70 bg-white/60 p-4 backdrop-blur">
                   <span className="font-mono text-[0.65rem] text-mist">
                     {String(i + 1).padStart(2, '0')} · {cert.dateLabel.en.split(' ').pop()}
                   </span>

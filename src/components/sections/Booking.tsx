@@ -142,7 +142,7 @@ export function Booking() {
                             i === step
                               ? 'border-volt text-volt'
                               : i < step
-                                ? 'border-chalk bg-chalk text-void'
+                                ? 'border-chalk bg-chalk text-white'
                                 : 'border-slate-2',
                           )}
                         >
@@ -233,7 +233,7 @@ export function Booking() {
                               cell.selectable
                                 ? 'text-chalk hover:bg-slate-2'
                                 : 'cursor-not-allowed text-mist/25',
-                              selected && 'text-void',
+                              selected && 'text-white',
                             )}
                           >
                             {selected && (
@@ -277,7 +277,7 @@ export function Booking() {
                           className={cn(
                             'relative rounded-xl border py-3.5 font-mono transition-colors',
                             selected
-                              ? 'border-volt text-void'
+                              ? 'border-volt text-white'
                               : 'border-slate-2 hover:border-volt/60 hover:text-volt',
                           )}
                         >
@@ -343,7 +343,7 @@ export function Booking() {
                             className={cn(
                               'rounded-full border px-4 py-2 text-sm transition-colors',
                               selected
-                                ? 'border-volt bg-volt text-void'
+                                ? 'border-volt bg-volt text-white'
                                 : 'border-slate-2 text-mist hover:border-volt/60 hover:text-chalk',
                             )}
                           >
@@ -376,7 +376,7 @@ export function Booking() {
                       maxLength={site.booking.maxMessageChars}
                       placeholder={t.booking.messagePlaceholder}
                       onChange={(e) => setDraft((d) => ({ ...d, message: e.target.value }))}
-                      className="w-full resize-y rounded-xl border border-slate-2 bg-void/50 px-4 py-3 text-chalk outline-none transition-colors placeholder:text-mist/50 focus:border-volt"
+                      className="w-full resize-y rounded-xl border border-slate-2 bg-white/70 px-4 py-3 text-chalk outline-none transition-colors placeholder:text-mist/50 focus:border-volt"
                     />
                     {/* Long mailto URLs get truncated by some clients, so the
                         field is capped and the remaining budget is visible. */}
@@ -389,7 +389,7 @@ export function Booking() {
                   <div className="mt-8 flex flex-wrap items-center gap-4">
                     <button
                       onClick={submit}
-                      className="rounded-full bg-chalk px-7 py-3 font-medium text-void transition-colors hover:bg-volt"
+                      className="rounded-full bg-chalk px-7 py-3 font-medium text-white shadow-[0_10px_30px_-12px_rgba(13,47,82,0.5)] transition-colors hover:bg-volt-dp"
                     >
                       {t.booking.submit}
                     </button>
@@ -440,7 +440,7 @@ export function Booking() {
                   <p className="mt-3 max-w-lg text-mist">{t.booking.successBody}</p>
                   <p className="mt-2 max-w-lg text-sm text-mist">{t.booking.successHint}</p>
 
-                  <pre className="mt-6 max-h-64 overflow-auto whitespace-pre-wrap rounded-xl border border-slate-2 bg-void/60 p-5 font-mono text-xs text-mist">
+                  <pre className="mt-6 max-h-64 overflow-auto whitespace-pre-wrap rounded-xl border border-slate-2 bg-white/70 p-5 font-mono text-xs text-mist">
                     {site.email}
                     {'\n\n'}
                     {body}
@@ -505,7 +505,7 @@ function Field({
         transition={{ duration: 0.35 }}
         aria-invalid={!!error}
         className={cn(
-          'w-full rounded-xl border bg-void/50 px-4 py-3 text-chalk outline-none transition-colors placeholder:text-mist/50',
+          'w-full rounded-xl border bg-white/70 px-4 py-3 text-chalk outline-none transition-colors placeholder:text-mist/50',
           error ? 'border-gold' : 'border-slate-2 focus:border-volt',
         )}
       />

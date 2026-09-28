@@ -43,8 +43,8 @@ export function Canvas3D() {
           className="absolute inset-0"
           style={{
             background:
-              'radial-gradient(70% 50% at 62% 28%, rgba(110,231,249,0.10), transparent 68%),' +
-              'radial-gradient(60% 45% at 20% 72%, rgba(167,139,250,0.08), transparent 70%)',
+              'radial-gradient(70% 50% at 62% 28%, rgba(142,214,240,0.32), transparent 68%),' +
+              'radial-gradient(60% 45% at 20% 72%, rgba(168,182,242,0.26), transparent 70%)',
           }}
         />
       </div>
@@ -79,10 +79,12 @@ export function Canvas3D() {
         <AdaptiveDpr pixelated />
 
         <SceneDirector progress={progress} velocity={velocity}>
-          <ambientLight intensity={0.35} />
-          <directionalLight position={[3, 4, 5]} intensity={1.5} color="#ffffff" />
-          <pointLight position={[-4, -2, 2]} intensity={22} color="#A78BFA" distance={14} />
-          <pointLight position={[3, 2, -1]} intensity={16} color="#6EE7F9" distance={12} />
+          {/* Bright ambient, as on an overcast snowfield: shadows on ice are
+              filled by light bouncing off everything around them. */}
+          <ambientLight intensity={1.5} />
+          <directionalLight position={[3, 5, 4]} intensity={2.2} color="#ffffff" />
+          <pointLight position={[-4, -2, 2]} intensity={18} color="#8fa6f5" distance={14} />
+          <pointLight position={[3, 2, -1]} intensity={14} color="#7fd4ef" distance={12} />
 
           <Suspense fallback={null}>
             <Particles count={tier.particles} />

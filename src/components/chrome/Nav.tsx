@@ -6,6 +6,7 @@ import { useI18n, useT } from '../../i18n';
 import { useScrollTo } from '../../hooks/useLenis';
 import { LangToggle } from './LangToggle';
 import { Magnetic } from '../ui/Magnetic';
+import { Icicles } from '../ui/Icicles';
 
 const SECTIONS = ['about', 'skills', 'services', 'work', 'games', 'certificates', 'cv'] as const;
 
@@ -54,7 +55,7 @@ export function Nav() {
         className={cn(
           'fixed inset-x-0 top-0 z-50 transition-all duration-500',
           scrolled
-            ? 'border-b border-slate-2/70 bg-void/78 py-3 backdrop-blur-xl'
+            ? 'border-b border-white/70 bg-white/55 py-3 shadow-[0_8px_32px_-20px_rgba(13,47,82,0.45)] backdrop-blur-xl'
             : 'border-b border-transparent py-5',
         )}
       >
@@ -87,7 +88,7 @@ export function Nav() {
             <Magnetic className="hidden sm:inline-block">
               <button
                 onClick={() => jump('booking')}
-                className="rounded-full bg-chalk px-5 py-2 text-sm font-medium text-void transition-all hover:bg-volt"
+                className="rounded-full bg-chalk px-5 py-2 text-sm font-medium text-white shadow-[0_8px_22px_-12px_rgba(13,47,82,0.5)] transition-all hover:bg-volt-dp"
               >
                 {t.nav.contact}
               </button>
@@ -114,12 +115,23 @@ export function Nav() {
             </button>
           </div>
         </nav>
+
+        {/* Hang from the bar's underside, but only once it has an edge to
+            hang from - over transparent hero copy they just look loose. */}
+        {scrolled && (
+          <Icicles
+            count={30}
+            maxLength={26}
+            seed={3}
+            className="top-full opacity-80"
+          />
+        )}
       </header>
 
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-40 flex flex-col justify-center bg-void/97 backdrop-blur-xl lg:hidden"
+            className="fixed inset-0 z-40 flex flex-col justify-center bg-white/85 backdrop-blur-2xl lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

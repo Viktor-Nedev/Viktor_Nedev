@@ -60,8 +60,10 @@ export function Crystal({ count = 34 }: { count?: number }) {
     // Colour is static, so it is written once rather than every frame.
     if (!initialised.current) {
       const rng = mulberry32(0xc0ffee);
-      const a = new THREE.Color('#6EE7F9');
-      const b = new THREE.Color('#A78BFA');
+      // Glacial blues. On a pale ground the shards read by being deeper
+      // than the background, so these are saturated rather than luminous.
+      const a = new THREE.Color('#3fa9d4');
+      const b = new THREE.Color('#7d8fe8');
       const c = new THREE.Color();
       shards.forEach((_, i) => {
         mesh.current!.setColorAt(i, c.copy(a).lerp(b, rng()));
@@ -90,12 +92,10 @@ export function Crystal({ count = 34 }: { count?: number }) {
         {/* Flat shading keeps the facets crisp; the emissive rim is what
             reads as "glass" without paying for real transmission. */}
         <meshStandardMaterial
-          emissive="#0A1420"
-          emissiveIntensity={0.6}
-          metalness={0.55}
-          roughness={0.3}
+          metalness={0.1}
+          roughness={0.12}
           transparent
-          opacity={0.68}
+          opacity={0.5}
           flatShading
         />
       </instancedMesh>
@@ -104,7 +104,7 @@ export function Crystal({ count = 34 }: { count?: number }) {
           painting a solid silhouette over the background. */}
       <mesh scale={0.62}>
         <icosahedronGeometry args={[1, 1]} />
-        <meshBasicMaterial color="#6EE7F9" wireframe transparent opacity={0.13} />
+        <meshBasicMaterial color="#2b7fa8" wireframe transparent opacity={0.16} />
       </mesh>
     </group>
   );

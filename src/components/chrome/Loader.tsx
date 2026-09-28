@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { EASE } from '../../lib/easing';
 import { useT } from '../../i18n';
 import { ScrollTrigger } from '../../lib/gsap';
+import { markEntered } from '../../lib/entrance';
 
 /**
  * Entry curtain.
@@ -34,6 +35,8 @@ export function Loader({ onDone }: { onDone?: () => void }) {
           setGone(true);
           // Layout is final now, so trigger positions can be measured.
           ScrollTrigger.refresh();
+          // Entrance animations were holding for this.
+          markEntered();
           onDone?.();
         }, 620);
       }, wait);
@@ -66,7 +69,7 @@ export function Loader({ onDone }: { onDone?: () => void }) {
     <AnimatePresence>
       {!gone && (
         <motion.div
-          className="fixed inset-0 z-[300] flex flex-col items-center justify-center bg-void"
+          className="condensation fixed inset-0 z-[300] flex flex-col items-center justify-center bg-gradient-to-b from-[#f3f8fc] to-[#dbe9f6]"
           exit={{ clipPath: 'inset(0 0 100% 0)' }}
           transition={{ duration: 0.85, ease: EASE }}
         >
@@ -79,7 +82,7 @@ export function Loader({ onDone }: { onDone?: () => void }) {
             Viktor Nedev<span className="text-volt">.</span>
           </motion.p>
 
-          <div className="mt-7 h-px w-52 overflow-hidden bg-slate-2">
+          <div className="mt-7 h-px w-52 overflow-hidden bg-slate-2/70">
             <div
               className="h-full origin-left bg-gradient-to-r from-volt to-plasma transition-transform duration-300 ease-out"
               style={{ transform: `scaleX(${progress / 100})` }}
