@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Reveal, RevealText } from '../ui/Reveal';
 import { Aurora } from '../ui/Aurora';
+import { asset } from '../../lib/asset';
 import { useI18n, useT } from '../../i18n';
 import { cn } from '../../lib/cn';
 import { EASE } from '../../lib/easing';
@@ -108,6 +109,20 @@ export function Booking() {
   return (
     <section id="booking" className="section-y relative overflow-hidden">
       <Aurora />
+
+      {/* Stands at the edge of the frame, cropped, so the booking card feels
+          like a cabin window rather than a form on a page. */}
+      <img
+        aria-hidden
+        src={asset('art/pine-single.webp')}
+        alt=""
+        width={900}
+        height={1399}
+        loading="lazy"
+        decoding="async"
+        className="pointer-events-none absolute -left-24 bottom-0 hidden w-[320px] select-none opacity-70 xl:block"
+      />
+
       <div className="shell relative">
         <div className="max-w-2xl">
           <Reveal>

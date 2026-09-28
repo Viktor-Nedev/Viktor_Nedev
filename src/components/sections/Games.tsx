@@ -3,6 +3,7 @@ import { TiltCard } from '../ui/TiltCard';
 import { useI18n, useT } from '../../i18n';
 import { games } from '../../data/games';
 import { asset } from '../../lib/asset';
+import { BackdropVideo } from '../ui/BackdropVideo';
 
 export function Games() {
   const t = useT();
@@ -20,6 +21,14 @@ export function Games() {
             <p className="mt-6 text-mist">{t.games.lede}</p>
           </Reveal>
         </div>
+
+        {/* The skier loops behind nothing - it is the one clip allowed to be
+            looked at directly, so it gets its own frame and no text on top. */}
+        <Reveal delay={0.1}>
+          <div className="surface relative mt-12 aspect-[21/9] overflow-hidden rounded-2xl">
+            <BackdropVideo slug="skier" />
+          </div>
+        </Reveal>
 
         <div className="mt-16 space-y-5">
           {games.map((game, i) => (

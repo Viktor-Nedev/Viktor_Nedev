@@ -66,10 +66,24 @@ export function monthHasNoSlots(year: number, month: number): boolean {
   return !buildMonth(year, month).some((c) => c.selectable);
 }
 
-/** The month the calendar should open on: the first with an available day. */
+/**
+ * The month the calendar should open on.
+ *
+ * Not simply the month containing the first bookable day: late in a month
+ * that leaves a grid with one or two open dates and everything else greyed
+ * out, which reads as "fully booked". If the current month has fewer than
+ * three, open on the next one instead - the visitor can always page back.
+ */
 export function initialMonth(): { year: number; month: number } {
   const d = earliestBookable();
-  return { year: d.getFullYear(), month: d.getMonth() };
+  const year = d.getFullYear();
+  const month = d.getMonth();
+
+  const openDays = buildMonth(year, month).filter((c) => c.selectable).length;
+  if (openDays >= 3) return { year, month };
+
+  const next = new Date(year, month + 1, 1);
+  return { year: next.getFullYear(), month: next.getMonth() };
 }
 
 export function canGoBack(year: number, month: number): boolean {

@@ -7,7 +7,7 @@ import { Magnetic } from '../ui/Magnetic';
 import { Counter } from '../ui/Counter';
 import { site } from '../../data/site';
 import { Marquee } from '../ui/Marquee';
-import { FrostedPane } from '../ui/FrostedPane';
+import { BackdropVideo } from '../ui/BackdropVideo';
 import { Icicles } from '../ui/Icicles';
 import { skills } from '../../data/skills';
 import { asset } from '../../lib/asset';
@@ -36,6 +36,24 @@ export function Hero() {
       id="top"
       className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden"
     >
+      {/* The frosted-window footage, behind everything. It is decoration:
+          the hero reads the same with it missing. */}
+      <BackdropVideo
+        slug="name-reveal"
+        lazy={false}
+        className="z-0 [&_img]:scale-[1.9] [&_video]:scale-[1.9]"
+        position="72% 62%"
+      />
+      {/* Veil so body copy keeps its contrast over the moving image. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 z-[1]"
+        style={{
+          background:
+            'linear-gradient(100deg, rgba(238,244,250,0.97) 0%, rgba(238,244,250,0.93) 40%, rgba(238,244,250,0.7) 72%, rgba(238,244,250,0.6) 100%)',
+        }}
+      />
+
       {/* Hung below the nav bar rather than from y=0, so they do not grow
           through the links. */}
       <Icicles count={26} maxLength={72} seed={9} className="top-[72px] z-[2]" />
@@ -44,21 +62,19 @@ export function Hero() {
           {t.hero.eyebrow}
         </motion.p>
 
-        <FrostedPane delay={900}>
-          <h1 className="text-display leading-[0.88]">
+        <h1 className="text-display leading-[0.88]">
             <span className="sr-only">{name}</span>
-            <span aria-hidden className="block overflow-hidden">
-              <motion.span className="block" {...rise(0.2)}>
-                {first}
-              </motion.span>
-            </span>
-            <span aria-hidden className="block overflow-hidden">
-              <motion.span className="block text-gradient" {...rise(0.3)}>
-                {rest.join(' ')}
-              </motion.span>
-            </span>
-          </h1>
-        </FrostedPane>
+          <span aria-hidden className="block overflow-hidden">
+            <motion.span className="block" {...rise(0.2)}>
+              {first}
+            </motion.span>
+          </span>
+          <span aria-hidden className="block overflow-hidden">
+            <motion.span className="block text-gradient" {...rise(0.3)}>
+              {rest.join(' ')}
+            </motion.span>
+          </span>
+        </h1>
 
         <motion.p
           className="mt-8 max-w-2xl font-display text-h3 text-chalk/90"

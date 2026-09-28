@@ -3,6 +3,7 @@ import { Magnetic } from '../ui/Magnetic';
 import { useI18n, useT } from '../../i18n';
 import { useScrollTo } from '../../hooks/useLenis';
 import { site } from '../../data/site';
+import { PineBand } from '../ui/PineBand';
 
 const LINKS = [
   { key: 'github', href: site.links.github, label: 'GitHub' },
@@ -16,7 +17,8 @@ export function Contact() {
   const scrollTo = useScrollTo();
 
   return (
-    <footer id="contact" className="relative border-t border-slate-2">
+    <footer id="contact" className="relative">
+      <PineBand className="-mb-px" />
       <div className="shell section-y">
         <div className="grid gap-14 lg:grid-cols-12">
           <div className="lg:col-span-7">
