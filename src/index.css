@@ -43,6 +43,12 @@
   --glass-blur: 18px;
   --frost-shadow: 0 14px 40px -18px rgba(13, 47, 82, 0.34);
 
+  /* Unbounded carries full Cyrillic - Clash Display, the first choice,
+     substituted a serif mid-heading in Bulgarian. Loaded via index.html. */
+  --font-display: 'Unbounded', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+
   --ease-signature: cubic-bezier(0.16, 1, 0.3, 1);
 }
 

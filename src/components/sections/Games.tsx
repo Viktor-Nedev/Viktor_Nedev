@@ -1,13 +1,109 @@
 import { Reveal, RevealText } from '../ui/Reveal';
-import { TiltCard } from '../ui/TiltCard';
+import { SkiGame } from './SkiGame';
 import { useI18n, useT } from '../../i18n';
 import { games } from '../../data/games';
 import { asset } from '../../lib/asset';
-import { BackdropVideo } from '../ui/BackdropVideo';
+import type { Game } from '../../data/types';
+
+/** Line glyphs for games that have no artwork yet. */
+const PLACEHOLDER: Record<string, string> = {
+  // A flag on a green.
+  'crazy-golf': 'M8 20V4l9 3.5L8 11 M5 20h10',
+  // A pot on a flame.
+  'gourmet-adventures': 'M4 10h16v5a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z M2 10h20 M9 6c0-1 1-1 1-2 M13 6c0-1 1-1 1-2',
+};
+
+function GameCard({ game }: { game: Game }) {
+  const t = useT();
+  const { lang } = useI18n();
+
+  return (
+    <article className="surface noise edge-glow sheen group relative overflow-hidden rounded-2xl p-5 transition-colors duration-500 hover:border-volt/40">
+      <div className="flex gap-4">
+        <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/90 bg-white/70">
+          {game.image ? (
+            <img
+              src={asset(game.image)}
+              alt=""
+              width={64}
+              height={64}
+              loading="lazy"
+              className="h-12 w-12 object-contain transition-transform duration-500 group-hover:scale-110"
+            />
+          ) : (
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" aria-hidden className="text-volt">
+              <path
+                d={PLACEHOLDER[game.slug] ?? 'M4 4h16v16H4z'}
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          )}
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <h3 className="font-display text-lg leading-tight">{game.name}</h3>
+            {game.award && (
+              <span
+                className="rounded-full border px-2 py-0.5 font-mono text-[0.6rem] uppercase tracking-wider"
+                style={{ color: 'var(--color-gold)', borderColor: 'rgba(154,91,0,0.35)' }}
+              >
+                {game.award[lang]}
+              </span>
+            )}
+          </div>
+          <p className="mt-1 text-xs text-volt">{game.tagline[lang]}</p>
+        </div>
+      </div>
+
+      <p className="mt-3 text-sm leading-relaxed text-mist">{game.description[lang]}</p>
+
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+        <ul className="flex flex-wrap gap-1.5">
+          {game.stack.map((tech) => (
+            <li key={tech} className="rounded-md border border-slate-2 px-2 py-0.5 font-mono text-[0.65rem] text-mist">
+              {tech}
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex items-center gap-3 text-sm">
+          {game.live && (
+            <a
+              href={game.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-chalk px-3.5 py-1 text-xs font-medium text-white transition-colors hover:bg-volt-dp"
+            >
+              {t.games.play} →
+            </a>
+          )}
+          {game.itch && (
+            <a href={game.itch} target="_blank" rel="noopener noreferrer" className="text-xs text-mist hover:text-chalk">
+              {t.games.itch} ↗
+            </a>
+          )}
+          {game.repo && (
+            <a href={game.repo} target="_blank" rel="noopener noreferrer" className="text-xs text-mist hover:text-chalk">
+              {t.games.code}
+            </a>
+          )}
+          {!game.live && !game.itch && !game.repo && (
+            <span className="font-mono text-[0.65rem] text-mist">{t.games.desktopOnly}</span>
+          )}
+        </div>
+      </div>
+
+      <span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-gradient-to-r from-volt to-plasma transition-transform duration-700 group-hover:scale-x-100" />
+    </article>
+  );
+}
 
 export function Games() {
   const t = useT();
-  const { lang } = useI18n();
 
   return (
     <section id="games" className="section-y relative">
@@ -22,111 +118,18 @@ export function Games() {
           </Reveal>
         </div>
 
-        {/* The skier loops behind nothing - it is the one clip allowed to be
-            looked at directly, so it gets its own frame and no text on top. */}
-        <Reveal delay={0.1}>
-          <div className="surface relative mt-12 aspect-[21/9] overflow-hidden rounded-2xl">
-            <BackdropVideo slug="skier" />
+        <div className="mt-14 grid gap-5 lg:grid-cols-12">
+          <Reveal className="lg:col-span-7 lg:h-full">
+            <SkiGame />
+          </Reveal>
+
+          <div className="flex flex-col gap-4 lg:col-span-5">
+            {games.map((game, i) => (
+              <Reveal key={game.slug} delay={0.1 + i * 0.08}>
+                <GameCard game={game} />
+              </Reveal>
+            ))}
           </div>
-        </Reveal>
-
-        <div className="mt-16 space-y-5">
-          {games.map((game, i) => (
-            <Reveal key={game.slug} delay={i * 0.08}>
-              <TiltCard className="group" intensity={4}>
-                <article className="surface noise edge-glow sheen relative overflow-hidden rounded-2xl transition-colors duration-500 group-hover:border-volt/40">
-                  <div className="grid gap-8 p-7 sm:p-9 lg:grid-cols-12 lg:items-center">
-                    {game.image ? (
-                      <div className="lg:col-span-3">
-                        <div className="flex items-center justify-center rounded-xl bg-white/70 p-6">
-                          <img
-                            src={asset(game.image)}
-                            alt={game.name}
-                            width={350}
-                            height={352}
-                            loading="lazy"
-                            className="w-28 transition-transform duration-500 group-hover:scale-105 sm:w-36"
-                          />
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="hidden lg:col-span-3 lg:block">
-                        <div className="flex aspect-square items-center justify-center rounded-xl border border-white/70 bg-white/60">
-                          <span className="font-display text-5xl text-slate-2">
-                            {String(i + 1).padStart(2, '0')}
-                          </span>
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="lg:col-span-6">
-                      <h3 className="font-display text-2xl sm:text-3xl">{game.name}</h3>
-                      <p className="mt-2 text-sm text-volt/90">{game.tagline[lang]}</p>
-                      <p className="mt-4 text-mist">{game.description[lang]}</p>
-
-                      <ul className="mt-5 flex flex-wrap gap-2">
-                        {game.stack.map((tech) => (
-                          <li
-                            key={tech}
-                            className="rounded-md border border-slate-2 px-2.5 py-1 font-mono text-[0.7rem] text-mist"
-                          >
-                            {tech}
-                          </li>
-                        ))}
-                      </ul>
-
-                      <div className="mt-6 flex flex-wrap items-center gap-4 text-sm">
-                        {game.live && (
-                          <a
-                            href={game.live}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group/link flex items-center gap-1.5 rounded-full bg-chalk px-5 py-2 font-medium text-void transition-colors hover:bg-volt"
-                          >
-                            {t.games.play}
-                            <span className="transition-transform duration-300 group-hover/link:translate-x-0.5">
-                              →
-                            </span>
-                          </a>
-                        )}
-                        {game.itch && (
-                          <a
-                            href={game.itch}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-mist transition-colors hover:text-chalk"
-                          >
-                            {t.games.itch} ↗
-                          </a>
-                        )}
-                        {game.repo && (
-                          <a
-                            href={game.repo}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-mist transition-colors hover:text-chalk"
-                          >
-                            {t.games.code}
-                          </a>
-                        )}
-                      </div>
-                    </div>
-
-                    <ul className="space-y-2.5 lg:col-span-3">
-                      {game.highlights.map((h, hi) => (
-                        <li key={hi} className="flex gap-2.5 text-sm text-mist">
-                          <span className="mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-volt" />
-                          {h[lang]}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-gradient-to-r from-volt to-plasma transition-transform duration-700 group-hover:scale-x-100" />
-                </article>
-              </TiltCard>
-            </Reveal>
-          ))}
         </div>
       </div>
     </section>

@@ -16,11 +16,9 @@ export default defineConfig({
     target: 'es2020',
     rollupOptions: {
       output: {
-        // Rolldown takes a function here. Splitting the heavy 3D and
-        // animation libraries keeps the initial chunk small.
+        // Rolldown takes a function here. GSAP is split out so it caches
+        // independently of the app code, which changes far more often.
         manualChunks(id: string) {
-          if (id.includes('node_modules/three')) return 'three';
-          if (id.includes('@react-three')) return 'r3f';
           if (id.includes('node_modules/gsap')) return 'gsap';
           return undefined;
         },

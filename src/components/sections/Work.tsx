@@ -7,11 +7,8 @@ import type { Project } from '../../data/types';
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const t = useT();
   const { lang } = useI18n();
-  // The two award winners lead the grid at double width.
-  const wide = index < 2;
-
   return (
-    <Reveal delay={(index % 3) * 0.07} className={wide ? 'sm:col-span-2' : ''}>
+    <Reveal delay={(index % 2) * 0.08}>
       <TiltCard className="group h-full" intensity={5}>
         <article className="surface noise edge-glow sheen relative flex h-full flex-col overflow-hidden rounded-2xl p-7 transition-colors duration-500 group-hover:border-volt/40 sm:p-8">
           <div className="flex flex-wrap items-start justify-between gap-3">
@@ -95,7 +92,7 @@ export function Work() {
           </Reveal>
         </div>
 
-        <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid gap-5 sm:grid-cols-2">
           {featuredProjects.map((project, i) => (
             <ProjectCard key={project.slug} project={project} index={i} />
           ))}

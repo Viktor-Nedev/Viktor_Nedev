@@ -2,6 +2,5 @@
 
 /** Blur placeholders for each clip's poster frame. */
 export const posterLqip: Record<string, string> = {
-  "name-reveal": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAwCdASoYAA4APu1iqU2ppaOiMAgBMB2JZwCdACHXU+fAuHZ5aW1MAP7iF7N2tfqDoj9TDBja/v4ozHD+a3mo4U74Rne/+YOAAA==",
-  "skier": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAwCdASoYAA4APu1oqk6ppiQiMAgBMB2JZQAAW7xvsfQhugdokAAA/t9nCTdZ8JS1q7MNzcGQVnUBvVYrBd9k7X0IwdqaNwfcAAAA"
+  "name-reveal": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAwCdASoYAA4APu1iqU2ppaOiMAgBMB2JZwCdACHXU+fAuHZ5aW1MAP7iF7N2tfqDoj9TDBja/v4ozHD+a3mo4U74Rne/+YOAAA=="
 };

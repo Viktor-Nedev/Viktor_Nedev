@@ -42,13 +42,6 @@ const CLIPS: Clip[] = [
     // Frame 0 carries a black window frame the rest of the clip does not.
     trimStart: 0.5,
   },
-  {
-    file: 'Shot 02 — The skier (cartoon).mp4',
-    slug: 'skier',
-    width: 1280,
-    // Flat cartoon colour compresses well, so it can afford more quality.
-    crf: { av1: 40, h264: 27 },
-  },
 ];
 
 interface Art {

@@ -1,7 +1,8 @@
 # Viktor Nedev — Portfolio
 
 Personal portfolio and booking site. Bilingual (Bulgarian / English), with a
-real-time WebGL hero and a self-contained meeting scheduler.
+frosted-glass design, a playable ski mini-game, and a self-contained meeting
+scheduler.
 
 **Live:** https://viktor-nedev.github.io/Viktor_Nedev/
 
@@ -9,7 +10,8 @@ real-time WebGL hero and a self-contained meeting scheduler.
 
 - **React 19 + TypeScript**, built with **Vite**
 - **Tailwind CSS v4** (CSS-first config — the design tokens live in `src/index.css`)
-- **Three.js / React Three Fiber** for the hero scene
+- **Canvas 2D** for the Downhill mini-game - no game engine
+- **Simple Icons** (CC0) for the skill logos
 - **GSAP ScrollTrigger** for scroll-linked animation, **Motion** for state transitions
 - **Lenis** for smooth scrolling
 
@@ -27,20 +29,21 @@ npm run dev
 | `npm run preview` | Serve the production build |
 | `npm run typecheck` | Types only |
 | `npm run assets:certs` | Regenerate certificate images from source files |
-| `npm run assets:repos` | Refresh the GitHub repo list |
+| `npm run assets:cv` | Republish the CV and its preview |
+| `npm run assets:media` | Encode footage and artwork from `assets-src/media` |
 
 ## How it fits together
 
 ```
 src/
-├─ three/        one persistent WebGL canvas, driven by scroll
+├─ game/         Downhill: pure engine, renderer, input
 ├─ components/
 │  ├─ chrome/    loader, cursor, nav, language toggle, scroll progress
 │  ├─ sections/  the page, top to bottom
 │  └─ ui/        reveal, tilt, magnetic, counter, lightbox
 ├─ booking/      calendar maths, mailto and .ics composition
 ├─ i18n/         typed BG/EN dictionaries
-├─ data/         projects, games, skills, generated certificates and repos
+├─ data/         projects, games, skills, resume, generated certificates
 └─ lib/          shared helpers
 ```
 
@@ -59,13 +62,23 @@ Bulgarian key fails the build rather than rendering `undefined`.
 Cyrillic glyphs is substituted silently, mid-heading, and the two languages end
 up in different typefaces. Verify by rendering, not by trusting a subset list.
 
-**Never call `setState` inside `useFrame`.** Scroll and pointer data reach the
-3D scenes through refs (`src/three/SceneDirector.tsx`) precisely so the React
-tree is not re-rendered every frame.
+**Keep per-frame work out of React state.** The mini-game runs its simulation
+and drawing in a rAF loop against refs; React only hears about discrete events
+(the HUD at most ten times a second, and the end of a run). The engine in
+`src/game/engine.ts` is pure and fixed-timestep, so it plays the same at any
+refresh rate.
+
+**The game only claims keys during a run.** Outside one, arrow keys and Space
+belong to the page. Keep it that way.
+
+**Scroll-linked animation is GSAP's; everything else is Motion.** Never put
+both on one element - they fight over `transform` and `opacity`. The Services
+card deal measures with `offsetLeft`/`offsetTop`, not `getBoundingClientRect`,
+because on a ScrollTrigger refresh the cards are already transformed.
 
 **Generated files are committed.** `src/data/certificates.generated.ts` and
-`repos.generated.ts` are produced by the scripts above and checked in, so the
-build needs no network access and visitors never hit the GitHub API.
+`media.generated.ts` are produced by the scripts above and checked in, so the
+build needs no network access or ffmpeg.
 
 ## Deployment
 

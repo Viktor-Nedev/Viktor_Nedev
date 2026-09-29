@@ -26,16 +26,6 @@ export interface Certificate {
   verifyUrl?: string;
 }
 
-export interface Repo {
-  name: string;
-  description: string | null;
-  language: string | null;
-  homepage: string | null;
-  url: string;
-  stars: number;
-  pushedAt: string;
-}
-
 export interface Project {
   slug: string;
   name: string;
@@ -47,7 +37,6 @@ export interface Project {
   devpost?: string;
   /** Award badge shown on the card. */
   award?: Localized;
-  featured: boolean;
 }
 
 export interface Game {
@@ -60,5 +49,7 @@ export interface Game {
   repo?: string;
   live?: string;
   itch?: string;
+  /** Placement badge, shown in the gold reserved for wins. */
+  award?: Localized;
   highlights: Localized[];
 }

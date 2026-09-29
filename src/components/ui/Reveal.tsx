@@ -1,8 +1,8 @@
 import { motion, type Variants } from 'motion/react';
 import { Fragment, type ReactNode } from 'react';
 
-/** Restricted to HTML tags: R3F widens the global JSX namespace with
- *  three.js elements, which have no children/className props. */
+/** Restricted to HTML tags, so `motion[as]` always resolves to a real
+ *  motion component that accepts children and className. */
 type Tag = keyof HTMLElementTagNameMap;
 import { EASE } from '../../lib/easing';
 import { useReducedMotion } from '../../hooks/useReducedMotion';

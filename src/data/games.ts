@@ -41,33 +41,39 @@ export const games: Game[] = [
   {
     slug: 'crazy-golf',
     name: 'Crazy Golf',
-    tagline: { en: 'Minigolf in the browser', bg: 'Миниголф в браузъра' },
-    description: {
-      en: 'A physics-driven minigolf game that runs entirely in the browser — aim, judge the power, and watch the ball actually behave.',
-      bg: 'Миниголф с физика, който работи изцяло в браузъра — прицелваш се, преценяваш силата и топката се държи както трябва.',
+    tagline: {
+      en: 'Real-time minigolf for four players',
+      bg: 'Миниголф за четирима в реално време',
     },
-    stack: ['JavaScript', 'Three.js', 'WebGL'],
+    description: {
+      en: 'Up to four players on one course at once, every putt synced live. Built on plain JavaScript and Canvas with Supabase Realtime, and ranked first among every entry in its game jam.',
+      bg: 'До четирима играчи на едно игрище едновременно, всеки удар синхронизиран на живо. Направена на чист JavaScript и Canvas със Supabase Realtime и класирана първа сред всички участници в своя game jam.',
+    },
+    stack: ['JavaScript', 'Canvas', 'Supabase Realtime'],
     repo: `${GH}/Crazy_Golf`,
     live: 'https://minigolf-blue.vercel.app',
+    award: { en: '1st place — game jam', bg: 'Първо място — game jam' },
     highlights: [
-      { en: 'Real-time physics and collision response', bg: 'Физика и сблъсъци в реално време' },
-      { en: 'Runs in any browser, no install', bg: 'Работи във всеки браузър, без инсталация' },
+      { en: 'Four players on one course, synced live', bg: 'Четирима играчи на едно игрище, синхронизирани на живо' },
+      { en: 'No engine: physics and rendering on Canvas', bg: 'Без енджин: физика и рендер на Canvas' },
     ],
   },
   {
-    slug: 'blackwood-manor',
-    name: 'Mystery of the Blackwood Manor',
-    tagline: { en: 'A detective game about paying attention', bg: 'Детективска игра за внимание към детайла' },
-    description: {
-      en: 'Gather clues, interrogate suspects and reason your way to the answer. Built around logic puzzles rather than reflexes.',
-      bg: 'Събираш улики, разпитваш заподозрени и стигаш до отговора с разсъждение. Изградена върху логически пъзели, не върху рефлекси.',
+    slug: 'gourmet-adventures',
+    name: 'Gourmet Adventures',
+    tagline: {
+      en: 'A 3D cooking game built in Unity',
+      bg: '3D кулинарна игра, направена на Unity',
     },
-    stack: ['JavaScript', 'Web'],
-    repo: `${GH}/misterygame`,
-    live: 'https://misterygame-flax.vercel.app',
+    description: {
+      en: 'A cooking game in Unity and C#, co-developed with a classmate. It took second place in the 3D games category at Softuniada 2024.',
+      bg: 'Кулинарна игра на Unity и C#, разработена съвместно със съученик. Взе второ място в категория 3D игри на Softuniada 2024.',
+    },
+    stack: ['Unity', 'C#'],
+    award: { en: '2nd place — Softuniada 2024', bg: 'Второ място — Softuniada 2024' },
     highlights: [
-      { en: 'Clue gathering and suspect interrogation', bg: 'Събиране на улики и разпит на заподозрени' },
-      { en: 'Logic puzzles as the core mechanic', bg: 'Логически пъзели като основна механика' },
+      { en: '3D games category, Softuniada 2024', bg: 'Категория 3D игри, Softuniada 2024' },
+      { en: 'Built as a two-person team', bg: 'Направена в екип от двама' },
     ],
   },
 ];

@@ -4,8 +4,8 @@ const GH = 'https://github.com/Viktor-Nedev';
 const DP = 'https://devpost.com/viktornedev08';
 
 /**
- * Hand-curated highlights. The full repo list is generated separately in
- * repos.generated.ts; this file carries the projects worth a real write-up.
+ * Hand-curated projects with a real write-up. Only the few named in
+ * FEATURED below are shown on the site.
  */
 export const projects: Project[] = [
   {
@@ -24,7 +24,6 @@ export const projects: Project[] = [
     live: 'https://elia-theta.vercel.app',
     devpost: DP,
     award: { en: 'Winner — HACK-EARTH 2026', bg: 'Победител — HACK-EARTH 2026' },
-    featured: true,
   },
   {
     slug: 'fridgeo',
@@ -41,7 +40,6 @@ export const projects: Project[] = [
     repo: `${GH}/Fridgeo`,
     devpost: DP,
     award: { en: '1st Place — Ship in a Day', bg: 'Първо място — Ship in a Day' },
-    featured: true,
   },
   {
     slug: 'nourish',
@@ -58,7 +56,6 @@ export const projects: Project[] = [
     repo: `${GH}/Nourish`,
     devpost: DP,
     award: { en: 'Hackathon winner', bg: 'Победител в хакатон' },
-    featured: true,
   },
   {
     slug: 'huddle',
@@ -76,7 +73,6 @@ export const projects: Project[] = [
     live: 'https://huddle-indol-phi.vercel.app',
     devpost: DP,
     award: { en: 'Hackathon winner', bg: 'Победител в хакатон' },
-    featured: true,
   },
   {
     slug: 'grabme',
@@ -94,7 +90,6 @@ export const projects: Project[] = [
     live: 'https://grabme-bay.vercel.app',
     devpost: DP,
     award: { en: 'Hackathon winner', bg: 'Победител в хакатон' },
-    featured: true,
   },
   {
     slug: 'claryx',
@@ -110,7 +105,6 @@ export const projects: Project[] = [
     stack: ['TypeScript', 'React'],
     repo: `${GH}/Claryx`,
     live: 'https://claryx-9src.vercel.app/',
-    featured: true,
   },
   {
     slug: 'domus',
@@ -126,7 +120,6 @@ export const projects: Project[] = [
     stack: ['TypeScript', 'React', 'AI'],
     repo: `${GH}/Domus`,
     live: 'https://domus-seven-pi.vercel.app',
-    featured: true,
   },
   {
     slug: 'transcriptio',
@@ -141,7 +134,6 @@ export const projects: Project[] = [
     },
     stack: ['JavaScript', 'AI'],
     repo: `${GH}/Transcriptio`,
-    featured: true,
   },
   {
     slug: 'animatch',
@@ -156,7 +148,6 @@ export const projects: Project[] = [
     },
     stack: ['C#', 'ASP.NET', 'Entity Framework', 'SQL'],
     repo: `${GH}/Animatch`,
-    featured: true,
   },
   {
     slug: 'cognix',
@@ -172,7 +163,6 @@ export const projects: Project[] = [
     stack: ['TypeScript', 'AI'],
     repo: `${GH}/Cognix`,
     live: 'https://cognix-omega.vercel.app',
-    featured: false,
   },
   {
     slug: 'chorus',
@@ -188,7 +178,6 @@ export const projects: Project[] = [
     stack: ['JavaScript', 'WebAudio', 'Canvas'],
     repo: `${GH}/chorus`,
     live: 'https://chorus-wheat.vercel.app',
-    featured: false,
   },
   {
     slug: 'helion',
@@ -203,7 +192,6 @@ export const projects: Project[] = [
     },
     stack: ['JavaScript', 'React', 'AI'],
     repo: `${GH}/Helion`,
-    featured: false,
   },
   {
     slug: 'maharashtra',
@@ -219,7 +207,6 @@ export const projects: Project[] = [
     stack: ['TypeScript', 'React'],
     repo: `${GH}/Maharashtra`,
     live: 'https://maharashtra-kappa.vercel.app',
-    featured: false,
   },
   {
     slug: 'genza',
@@ -235,7 +222,6 @@ export const projects: Project[] = [
     stack: ['TypeScript', 'AI'],
     repo: `${GH}/Genza`,
     live: 'https://genza-five.vercel.app',
-    featured: false,
   },
   {
     slug: 'zoodle',
@@ -247,7 +233,6 @@ export const projects: Project[] = [
     },
     stack: ['Dart', 'Flutter'],
     repo: `${GH}/Zoodle`,
-    featured: false,
   },
   {
     slug: 'smartcity',
@@ -259,8 +244,17 @@ export const projects: Project[] = [
     },
     stack: ['Dart', 'Flutter'],
     repo: `${GH}/SmartCity`,
-    featured: false,
   },
 ];
 
-export const featuredProjects = projects.filter((p) => p.featured);
+/**
+ * The showcase, in display order. An explicit list rather than a flag on each
+ * project, so the order is stated once and cannot drift with the array.
+ */
+const FEATURED = ['elia', 'chorus', 'huddle', 'maharashtra'] as const;
+
+export const featuredProjects: Project[] = FEATURED.map((slug) => {
+  const project = projects.find((p) => p.slug === slug);
+  if (!project) throw new Error(`Featured project "${slug}" is not in projects.ts`);
+  return project;
+});
