@@ -95,3 +95,10 @@ export function canGoForward(year: number, month: number): boolean {
   const latest = latestBookable();
   return year < latest.getFullYear() || month < latest.getMonth();
 }
+
+/** The first day a visitor can actually book, for the "next free day" shortcut. */
+export function firstAvailable(): Date {
+  const d = earliestBookable();
+  for (let i = 0; i < 14 && !isSelectable(d); i++) d.setDate(d.getDate() + 1);
+  return d;
+}

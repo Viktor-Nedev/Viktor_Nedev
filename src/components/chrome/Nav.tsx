@@ -88,7 +88,7 @@ export function Nav() {
             <Magnetic className="hidden sm:inline-block">
               <button
                 onClick={() => jump('booking')}
-                className="rounded-full bg-chalk px-5 py-2 text-sm font-medium text-white shadow-[0_8px_22px_-12px_rgba(13,47,82,0.5)] transition-all hover:bg-volt-dp"
+                className="whitespace-nowrap rounded-full bg-chalk px-5 py-2 text-sm font-medium text-white shadow-[0_8px_22px_-12px_rgba(13,47,82,0.5)] transition-all hover:bg-volt-dp"
               >
                 {t.nav.contact}
               </button>

@@ -57,7 +57,7 @@ export function SkiGame() {
   const canvas = useRef<HTMLCanvasElement>(null);
   const state = useRef<State | null>(null);
   const controls = useRef(new Controls());
-  const sprites = useRef<Sprites>({ tree: null });
+  const sprites = useRef<Sprites>({ tree: null, bush: null, rock: null });
   const raf = useRef(0);
   const dpr = useRef(1);
 
@@ -175,13 +175,18 @@ export function SkiGame() {
     const ro = new ResizeObserver(fit);
     ro.observe(el);
 
-    const img = new Image();
-    img.decoding = 'async';
-    img.src = asset('art/pine-single.webp');
-    img.onload = () => {
-      sprites.current.tree = img;
-      paint();
+    const load = (key: keyof Sprites, file: string) => {
+      const img = new Image();
+      img.decoding = 'async';
+      img.src = asset(file);
+      img.onload = () => {
+        sprites.current[key] = img;
+        paint();
+      };
     };
+    load('tree', 'art/pine-single.webp');
+    load('bush', 'art/pine-bush.webp');
+    load('rock', 'art/rock.webp');
 
     const ctl = controls.current;
     ctl.attach(el);

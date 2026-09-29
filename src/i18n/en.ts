@@ -210,6 +210,13 @@ export const en = {
     nextMonth: 'Next month',
     mailSubject: 'Meeting request',
     mailIntro: 'Hi Viktor, I would like to book a meeting.',
+    emptyTitle: 'Pick a day to begin',
+    nextFree: 'Next free day',
+    duration: '45 min · online call',
+    available: 'Open',
+    change: 'Change',
+    slot: 'Your slot',
+    showMessage: 'Show the message',
   },
   contact: {
     title: 'Contact',

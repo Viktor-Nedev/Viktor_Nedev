@@ -50,6 +50,7 @@ export const games: Game[] = [
       bg: 'До четирима играчи на едно игрище едновременно, всеки удар синхронизиран на живо. Направена на чист JavaScript и Canvas със Supabase Realtime и класирана първа сред всички участници в своя game jam.',
     },
     stack: ['JavaScript', 'Canvas', 'Supabase Realtime'],
+    image: 'art/crazy-golf-logo.webp',
     repo: `${GH}/Crazy_Golf`,
     live: 'https://minigolf-blue.vercel.app',
     award: { en: '1st place — game jam', bg: 'Първо място — game jam' },

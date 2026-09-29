@@ -20,15 +20,16 @@ function GameCard({ game }: { game: Game }) {
   return (
     <article className="surface noise edge-glow sheen group relative overflow-hidden rounded-2xl p-5 transition-colors duration-500 hover:border-volt/40">
       <div className="flex gap-4">
-        <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/90 bg-white/70">
+        <div className="flex h-16 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/90 bg-white/70">
           {game.image ? (
             <img
               src={asset(game.image)}
               alt=""
               width={64}
-              height={64}
+              height={48}
               loading="lazy"
-              className="h-12 w-12 object-contain transition-transform duration-500 group-hover:scale-110"
+              // Wide title cards and round logos both fit without cropping.
+              className="max-h-12 max-w-16 object-contain transition-transform duration-500 group-hover:scale-110"
             />
           ) : (
             <svg viewBox="0 0 24 24" width="26" height="26" fill="none" aria-hidden className="text-volt">

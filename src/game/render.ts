@@ -10,7 +10,19 @@ import { cameraY, type State } from './engine';
 
 export interface Sprites {
   tree: HTMLImageElement | null;
+  bush: HTMLImageElement | null;
+  rock: HTMLImageElement | null;
 }
+
+/**
+ * Drawn height at scale 1, shadow half-width, and how far above the image
+ * bottom the object meets the snow, per obstacle kind.
+ */
+const OBSTACLE = {
+  0: { height: 108, shadow: 20, base: 0.97 },
+  1: { height: 80, shadow: 26, base: 0.95 },
+  2: { height: 46, shadow: 30, base: 0.9 },
+} as const;
 
 const INK = '#0d2438';
 const TEAL = '#0b7590';
@@ -170,24 +182,27 @@ function drawCoin(ctx: CanvasRenderingContext2D, x: number, y: number, phase: nu
   ctx.restore();
 }
 
-function drawTree(ctx: CanvasRenderingContext2D, img: HTMLImageElement | null, x: number, y: number, scale: number) {
-  // Pines stand well over the skier, or the slope reads as shrubs.
-  const h = 108 * scale;
+function drawObstacle(ctx: CanvasRenderingContext2D, sprites: Sprites, kind: 0 | 1 | 2, x: number, y: number, scale: number) {
+  const spec = OBSTACLE[kind];
+  const img = kind === 0 ? sprites.tree : kind === 1 ? sprites.bush : sprites.rock;
+  const h = spec.height * scale;
 
-  // Shadow thrown down-right, as if lit from the upper left.
   ctx.fillStyle = 'rgba(30,70,110,0.13)';
   ctx.beginPath();
-  ctx.ellipse(x + 8 * scale, y + 2, 20 * scale, 5.5 * scale, 0, 0, Math.PI * 2);
+  ctx.ellipse(x + 8 * scale, y + 2, spec.shadow * scale, 5.5 * scale, 0, 0, Math.PI * 2);
   ctx.fill();
 
   if (img && img.complete && img.naturalWidth > 0) {
     const w = h * (img.naturalWidth / img.naturalHeight);
-    // The trunk base sits a few percent above the image bottom.
-    ctx.drawImage(img, x - w / 2, y - h * 0.97, w, h);
+    ctx.drawImage(img, x - w / 2, y - h * spec.base, w, h);
     return;
   }
+  // Sprite still loading: fall back to the vector pine for every kind.
+  drawTree(ctx, x, y, scale);
+}
 
-  // Vector fallback while the sprite loads.
+/** Vector pine, drawn only while the sprites are still loading. */
+function drawTree(ctx: CanvasRenderingContext2D, x: number, y: number, scale: number) {
   ctx.fillStyle = '#5c4636';
   ctx.fillRect(x - 2 * scale, y - 8 * scale, 4 * scale, 8 * scale);
   for (let i = 0; i < 3; i++) {
@@ -340,7 +355,7 @@ export function draw(ctx: CanvasRenderingContext2D, s: State, sprites: Sprites) 
   for (const d of drawables) {
     if (d.kind === 0) {
       const t = s.trees[d.i];
-      drawTree(ctx, sprites.tree, t.x, t.y - camY, t.scale);
+      drawObstacle(ctx, sprites, t.kind, t.x, t.y - camY, t.scale);
     } else {
       drawSkier(ctx, s, s.x, s.y - camY);
     }

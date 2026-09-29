@@ -36,22 +36,31 @@ export function Hero() {
       id="top"
       className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden"
     >
-      {/* The frosted-window footage, behind everything. It is decoration:
-          the hero reads the same with it missing. */}
-      <BackdropVideo
-        slug="name-reveal"
-        lazy={false}
-        className="z-0 [&_img]:scale-[1.9] [&_video]:scale-[1.9]"
-        position="72% 62%"
-      />
-      {/* Veil so body copy keeps its contrast over the moving image. */}
+      {/* A slow flight over a snowy pine forest, behind everything. The
+          forest keeps to the right of the frame and the left stays open sky
+          and snow, where the name sits. Decoration only: the hero reads the
+          same with it missing. */}
+      <BackdropVideo slug="hero-forest" lazy={false} className="z-0" position="72% center" />
+
+      {/* Veil. On wide screens only the text side needs it, so the forest
+          on the right stays vivid; on narrow ones the copy covers the whole
+          frame, so the wash is even. */}
       <div
         aria-hidden
-        className="absolute inset-0 z-[1]"
+        className="absolute inset-0 z-[1] bg-[rgba(238,244,250,0.72)] lg:bg-transparent"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 z-[1] hidden lg:block"
         style={{
           background:
-            'linear-gradient(100deg, rgba(238,244,250,0.97) 0%, rgba(238,244,250,0.93) 40%, rgba(238,244,250,0.7) 72%, rgba(238,244,250,0.6) 100%)',
+            'linear-gradient(100deg, rgba(238,244,250,0.9) 0%, rgba(238,244,250,0.78) 34%, rgba(238,244,250,0.3) 58%, rgba(238,244,250,0) 78%)',
         }}
+      />
+      {/* Settles the bottom edge into the page instead of a hard cut. */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 z-[1] h-40 bg-gradient-to-t from-[#eef4fa] to-transparent"
       />
 
       {/* Hung below the nav bar rather than from y=0, so they do not grow

@@ -211,6 +211,13 @@ export const bg: Dict = {
     nextMonth: 'Следващ месец',
     mailSubject: 'Заявка за среща',
     mailIntro: 'Здравей, Виктор, бих искал да запазя среща.',
+    emptyTitle: 'Изберете ден, за да започнем',
+    nextFree: 'Първи свободен ден',
+    duration: '45 мин · онлайн разговор',
+    available: 'Свободно',
+    change: 'Промени',
+    slot: 'Вашият час',
+    showMessage: 'Покажи съобщението',
   },
   contact: {
     title: 'Контакт',

@@ -23,11 +23,26 @@ const COIN_VALUE = 10;
 
 export type Phase = 'idle' | 'running' | 'crashed' | 'over';
 
+/** 0 = tall pine, 1 = bushy pine, 2 = snow-covered rock. */
+export type ObstacleKind = 0 | 1 | 2;
+
 export interface Tree {
   x: number;
   y: number;
   scale: number;
+  kind: ObstacleKind;
 }
+
+/**
+ * Collision half-extents at scale 1, per obstacle kind. Deliberately smaller
+ * than the drawn shapes: clipping a branch should feel like a near miss, not
+ * a wipe-out.
+ */
+const HITBOX: Record<ObstacleKind, [number, number]> = {
+  0: [9, 7], // tall pine - just the trunk
+  1: [13, 8], // bushy pine - lower, wider skirt
+  2: [16, 8], // rock - wide and low
+};
 
 export interface Coin {
   x: number;
@@ -87,6 +102,11 @@ export interface State {
   crashTime: number;
   time: number;
   seed: number;
+}
+
+/** Mostly tall pines, so the slope still reads as a forest. */
+function pickKind(r: number): ObstacleKind {
+  return r < 0.62 ? 0 : r < 0.86 ? 1 : 2;
 }
 
 /** Deterministic PRNG, so a given seed always lays out the same slope. */
@@ -154,7 +174,7 @@ export function composeIdle(s: State) {
     const y = top + 40 + rand(s) * s.height;
     const nearTrail = s.trail.some((p) => Math.abs(p.x - x) < 46 && Math.abs(p.y - y) < 46);
     if (nearTrail || Math.hypot(x - s.x, y - s.y) < 70) continue;
-    s.trees.push({ x, y, scale: 0.7 + rand(s) * 0.55 });
+    s.trees.push({ x, y, scale: 0.7 + rand(s) * 0.55, kind: pickKind(rand(s)) });
   }
   s.trees.sort((a, b) => a.y - b.y);
 }
@@ -211,7 +231,7 @@ function spawnRow(s: State, y: number) {
     // middle, where every run begins. Guarded by position, not phase, because
     // these rows are laid out before the run starts.
     if (y < s.height * 1.5 && Math.abs(x - s.width / 2) < 80) continue;
-    s.trees.push({ x, y: y + rand(s) * 30, scale: 0.72 + rand(s) * 0.55 });
+    s.trees.push({ x, y: y + rand(s) * 30, scale: 0.72 + rand(s) * 0.55, kind: pickKind(rand(s)) });
   }
 }
 
@@ -330,10 +350,11 @@ export function step(s: State, input: Input) {
     }
   }
 
-  // Trees: a forgiving trunk ellipse, far smaller than the drawn canopy.
+  // Obstacles: a forgiving ellipse per kind, smaller than what is drawn.
   for (const t of s.trees) {
-    const dx = (s.x - t.x) / (9 * t.scale);
-    const dy = (s.y - t.y) / (7 * t.scale);
+    const [hx, hy] = HITBOX[t.kind];
+    const dx = (s.x - t.x) / (hx * t.scale);
+    const dy = (s.y - t.y) / (hy * t.scale);
     if (dx * dx + dy * dy < 1) {
       s.phase = 'crashed';
       s.crashTime = 0;

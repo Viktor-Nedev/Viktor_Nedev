@@ -2,5 +2,5 @@
 
 /** Blur placeholders for each clip's poster frame. */
 export const posterLqip: Record<string, string> = {
-  "name-reveal": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAwCdASoYAA4APu1iqU2ppaOiMAgBMB2JZwCdACHXU+fAuHZ5aW1MAP7iF7N2tfqDoj9TDBja/v4ozHD+a3mo4U74Rne/+YOAAA=="
+  "hero-forest": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAwCdASoYAA4ALrV2u12jqampiYC0SxgE6AIfDkSUusZsscdLPIAAAP7niGceX3ofmPRxXeNrC0YLeSp6ivHH9SPXbc/kqaBAAA=="
 };

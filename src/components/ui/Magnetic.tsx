@@ -1,6 +1,7 @@
 import { useRef, type ReactNode } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { cn } from '../../lib/cn';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 /**
@@ -34,8 +35,10 @@ export function Magnetic({
   return (
     <motion.div
       ref={ref}
-      className={className}
-      style={{ x: springX, y: springY, display: 'inline-block' }}
+      // Display goes through the class list, not an inline style: an inline
+      // `display` would override a caller's `hidden sm:inline-block`.
+      className={cn('inline-block', className)}
+      style={{ x: springX, y: springY }}
       onPointerMove={(e) => {
         const el = ref.current;
         if (!el) return;
